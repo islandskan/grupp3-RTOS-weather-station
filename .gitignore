@@ -1,0 +1,26 @@
+# Compiled files
+*.o
+*.obj
+*.slo
+*.lo
+
+# Executables
+*.exe
+*.out
+*.app
+
+# VSC
+.vscode/*
+
+# Other Code editors/IDE Specifics?
+
+# Misc.
+*.drawio
+
+# CMake?
+
+# Windows Specific?
+
+# macOS Specific?
+
+# Linus Specific?

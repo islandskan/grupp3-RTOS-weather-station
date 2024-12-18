@@ -6,7 +6,7 @@
 #include <thread>
 #include <mutex>
 #include <atomic>
-#include <numeric> // <-- For accumulate 
+#include <numeric> // <-- For accumulate
 #include <algorithm>
 
 class Sensor
@@ -15,7 +15,7 @@ public:
     // Constructor
     Sensor();
     // Destructor
-    ~Sensor();
+    virtual ~Sensor();
 
     // Getters
     std::vector<float> getData();
@@ -35,7 +35,7 @@ protected: // <-- Protected?
     std::atomic<bool> Running;
     std::mutex sensorMutex;
     float generateRandomSensorData(float minValue, float maxValue);
-    
+
     virtual void runSensor();
 
     // Methods

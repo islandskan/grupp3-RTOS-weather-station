@@ -1,8 +1,7 @@
 #include "TempSensor.h"
 
-TempSensor::TempSensor()
-{
-}
+TempSensor::TempSensor() : Sensor() {}
+TempSensor::~TempSensor() {}
 
 void TempSensor::runSensor()
 {

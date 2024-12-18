@@ -1,12 +1,7 @@
 #include "WindSensor.h"
 
-WindSensor::WindSensor(/* args */)
-{
-}
-
-WindSensor::~WindSensor()
-{
-}
+WindSensor::WindSensor() : Sensor() {}
+WindSensor::~WindSensor() {}
 
 void WindSensor::runSensor()
 {

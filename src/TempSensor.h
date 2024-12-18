@@ -7,10 +7,10 @@ class TempSensor : public Sensor
 {
 public:
     TempSensor();
+    ~TempSensor();
 
 private:
-void runSensor() override;
+    void runSensor() override;
 };
-
 
 #endif

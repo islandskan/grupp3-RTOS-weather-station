@@ -9,16 +9,19 @@ float Sensor::calculateAverage()
     return (std::accumulate(dataList.begin(), dataList.end(), 0.0) / dataList.size());
 }
 
-float Sensor::calculateMinimum(const std::vector<float> &dataList)
+float Sensor::calculateMinimum()
 {
+    return 0.0; // <-- To remove warnings
 }
 
-float Sensor::calculateMaximum(const std::vector<float> &dataList)
+float Sensor::calculateMaximum()
 {
+    return 0.0; // <-- To remove warnings
 }
 
 float Sensor::getLatestData()
 {
+    return 0.0; // <-- To remove warnings
 }
 
 float Sensor::getAverageData()
@@ -28,8 +31,10 @@ float Sensor::getAverageData()
 
 float Sensor::getMinimumData()
 {
+    return calculateMinimum();
 }
 
 float Sensor::getMaxData()
 {
+    return calculateMaximum();
 }

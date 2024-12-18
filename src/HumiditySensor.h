@@ -6,11 +6,10 @@ class HumiditySensor : public Sensor
 {
 public:
     HumiditySensor();
+    ~HumiditySensor();
+
 private:
     void runSensor() override;
-
 };
-
-
 
 #endif

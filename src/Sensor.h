@@ -6,6 +6,8 @@
 #include <thread>
 #include <mutex>
 #include <atomic>
+#include <numeric> // <-- For accumulate 
+#include <algorithm>
 
 class Sensor
 {
@@ -24,7 +26,7 @@ public:
     float getMinimumData();
     float getMaxData();
 
-private: // <-- Protected?
+protected: // <-- Protected?
     // Members
     std::vector<float> dataList;
     std::mt19937 mt;
@@ -37,8 +39,8 @@ private: // <-- Protected?
 
     // Methods
     float calculateAverage();
-    float calculateMinimum(const std::vector<float> &dataList);
-    float calculateMaximum(const std::vector<float> &dataList);
+    float calculateMinimum();
+    float calculateMaximum();
 };
 
 #endif

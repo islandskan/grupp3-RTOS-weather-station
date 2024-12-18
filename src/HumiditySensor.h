@@ -2,7 +2,7 @@
 #define HUMIDITYSENSOR_H
 #include "Sensor.h"
 
-class HumiditySensor : Sensor
+class HumiditySensor : public Sensor
 {
 public:
     HumiditySensor();

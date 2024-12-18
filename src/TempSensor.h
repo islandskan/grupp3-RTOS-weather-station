@@ -4,7 +4,7 @@
 #include "Sensor.h"
 #include <random>
 
-class TempSensor : Sensor
+class TempSensor : public Sensor
 {
 public:
     TempSensor();

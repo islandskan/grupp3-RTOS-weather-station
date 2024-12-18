@@ -11,12 +11,12 @@ float Sensor::calculateAverage()
 
 float Sensor::calculateMinimum()
 {
-    return 0.0; // <-- To remove warnings
+    return *std::min_element(dataList.begin(), dataList.end());
 }
 
 float Sensor::calculateMaximum()
 {
-    return 0.0; // <-- To remove warnings
+    return *std::max_element(dataList.begin(), dataList.end());
 }
 
 float Sensor::getLatestData()

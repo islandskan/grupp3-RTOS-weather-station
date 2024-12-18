@@ -7,6 +7,7 @@ class HumiditySensor : public Sensor
 public:
     HumiditySensor();
 private:
+    void runSensor() override;
 
 };
 

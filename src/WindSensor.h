@@ -9,7 +9,7 @@ public:
     ~WindSensor();
 
 private:
-    /* data */
+    void runSensor() override;
 };
 
 #endif

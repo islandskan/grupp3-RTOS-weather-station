@@ -26,7 +26,7 @@ public:
     float getMinimumData();
     float getMaxData();
 
-protected: // <-- Protected?
+protected:
     // Members
     std::vector<float> dataList;
     std::mt19937 mt;

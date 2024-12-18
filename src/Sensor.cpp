@@ -8,6 +8,7 @@ Sensor::Sensor() : mt(std::random_device{}()), Running(true)
 Sensor::~Sensor()
 {
     Running = false;
+    sensorThread.join();
 }
 
 float Sensor::calculateAverage()
@@ -31,7 +32,7 @@ float Sensor::calculateMaximum()
 float Sensor::getLatestData()
 {
     std::lock_guard<std::mutex> lock(sensorMutex);
-    return this->dataList.back();
+    return dataList.back();
 }
 
 float Sensor::getAverageData()

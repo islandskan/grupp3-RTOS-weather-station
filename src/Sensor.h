@@ -34,8 +34,9 @@ protected: // <-- Protected?
     std::thread sensorThread;
     std::atomic<bool> Running;
     std::mutex sensorMutex;
-
-    virtual double generateRandomSensorData(double minValue, double maxValue);
+    float generateRandomSensorData(float minValue, float maxValue);
+    
+    virtual void runSensor();
 
     // Methods
     float calculateAverage();

@@ -2,15 +2,14 @@
 #define WINDSENSOR_H
 #include "Sensor.h"
 
-class WindSensor : Sensor
+class WindSensor : public Sensor
 {
 public:
     WindSensor();
     ~WindSensor();
+
 private:
     /* data */
 };
-
-
 
 #endif

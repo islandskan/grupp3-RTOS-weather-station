@@ -7,8 +7,9 @@
 #include <mutex>
 #include <atomic>
 
-class Sensor {
-    public:
+class Sensor
+{
+public:
     // Constructor
     Sensor();
     // Destructor
@@ -23,7 +24,7 @@ class Sensor {
     float getMinimumData();
     float getMaxData();
 
-    private:  // <-- Protected?
+private: // <-- Protected?
     // Members
     std::vector<float> dataList;
     std::mt19937 mt;
@@ -35,9 +36,9 @@ class Sensor {
     virtual double generateRandomSensorData(double minValue, double maxValue);
 
     // Methods
-    float calculateAverage(const std::vector<float>& dataList);
-    float calculateMinimum(const std::vector<float>& dataList);
-    float calculateMaximum(const std::vector<float>& dataList);
+    float calculateAverage();
+    float calculateMinimum(const std::vector<float> &dataList);
+    float calculateMaximum(const std::vector<float> &dataList);
 };
 
 #endif

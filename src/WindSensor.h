@@ -7,6 +7,8 @@ class WindSensor : public Sensor
 public:
     WindSensor();
     ~WindSensor();
+    std::string getSensorType() const override;
+
 
 private:
     void runSensor() override;

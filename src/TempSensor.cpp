@@ -14,3 +14,8 @@ void TempSensor::runSensor()
         std::this_thread::sleep_for(std::chrono::milliseconds(500));
     }
 }
+
+    std::string TempSensor::getSensorType() const
+    {
+        return "TempSensor";
+    }

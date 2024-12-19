@@ -8,6 +8,7 @@ class TempSensor : public Sensor
 public:
     TempSensor();
     ~TempSensor();
+    std::string getSensorType() const override;
 
 private:
     void runSensor() override;

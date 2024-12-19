@@ -14,3 +14,8 @@ void HumiditySensor::runSensor()
         std::this_thread::sleep_for(std::chrono::milliseconds(500));
     }
 }
+
+std::string HumiditySensor::getSensorType() const
+{
+    return "HumiditySensor";
+}

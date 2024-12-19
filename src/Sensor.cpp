@@ -3,12 +3,14 @@
 Sensor::Sensor() : mt(std::random_device{}()), Running(true)
 {
     this->sensorThread = std::thread(&Sensor::runSensor, this);
+    this->calculationThread = std::thread(&Sensor::calculateStatistics, this);
 }
 
 Sensor::~Sensor()
 {
     Running = false;
     sensorThread.join();
+    calculationThread.join();
 }
 
 float Sensor::calculateAverage()
@@ -35,6 +37,14 @@ float Sensor::calculateMaximum()
     return *std::max_element(dataList.begin(), dataList.end());
 }
 
+void Sensor::calculateStatistics()
+{
+    max = calculateMaximum();
+    min = calculateMinimum();
+    average = calculateAverage();
+    std::this_thread::sleep_for(std::chrono::seconds(5));
+}
+
 float Sensor::getLatestData()
 {
     std::lock_guard<std::mutex> lock(sensorMutex);
@@ -43,17 +53,17 @@ float Sensor::getLatestData()
 
 float Sensor::getAverageData()
 {
-    return calculateAverage();
+    return average;
 }
 
 float Sensor::getMinimumData()
 {
-    return calculateMinimum();
+    return min;
 }
 
 float Sensor::getMaxData()
 {
-    return calculateMaximum();
+    return max;
 }
 
 float Sensor::generateRandomSensorData(float minValue, float maxValue)

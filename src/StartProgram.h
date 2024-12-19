@@ -2,13 +2,15 @@
 #define STARTPROGRAM_H
 #include <iostream>
 #include <typeinfo>
+#include <atomic>
 
 #include "Sensor.h"
 #include "TempSensor.h"
 #include "HumiditySensor.h"
 #include "WindSensor.h"
 
-bool Running = true;
+std::atomic<bool> isRunning = true;
+std::mutex sensorMutex;
 
 void printLatestSensorData(const std::vector<std::unique_ptr<Sensor>>& sensors);
 void printStatistics(const std::vector<std::unique_ptr<Sensor>>& sensors);
@@ -16,7 +18,7 @@ void printStatistics(const std::vector<std::unique_ptr<Sensor>>& sensors);
 void startProgram()
 {
     std::vector<std::unique_ptr<Sensor>> sensors;
-    std::cout << "Runs you fool???" << std::endl;
+    std::cout << "Amount of simulated sensors you want to create: ";
     int runs;
     std::cin >> runs;
     for (int i = 0; i < runs; i++) 
@@ -40,9 +42,10 @@ void startProgram()
 
 void printStatistics(const std::vector<std::unique_ptr<Sensor>>& sensors)
 {
-    while (Running)
+    while (isRunning)
     {
         std::this_thread::sleep_for(std::chrono::seconds(10));
+        std::lock_guard<std::mutex> lock(sensorMutex);
         std::cout << "Sensor Statistical Data: " << std::endl;
         for (int i = 0; i < sensors.size(); i++)
         {
@@ -67,9 +70,10 @@ void printStatistics(const std::vector<std::unique_ptr<Sensor>>& sensors)
 
 void printLatestSensorData(const std::vector<std::unique_ptr<Sensor>>& sensors)
 {
-    while (Running)
+    while (isRunning)
     {
         std::this_thread::sleep_for(std::chrono::seconds(2));
+        std::lock_guard<std::mutex> lock(sensorMutex);
         std::cout << "Latest Sensor Data: " << std::endl;
         for (int i = 0; i < sensors.size(); ++i) 
         {

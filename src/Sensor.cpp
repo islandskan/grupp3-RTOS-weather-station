@@ -17,6 +17,12 @@ float Sensor::calculateAverage()
     return (std::accumulate(dataList.begin(), dataList.end(), 0.0) / dataList.size());
 }
 
+std::vector<float> Sensor::getData()
+{
+    std::lock_guard<std::mutex> lock(sensorMutex);
+    return dataList;
+}
+
 float Sensor::calculateMinimum()
 {
     std::lock_guard<std::mutex> lock(sensorMutex);

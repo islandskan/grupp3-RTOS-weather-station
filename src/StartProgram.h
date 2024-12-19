@@ -78,7 +78,6 @@ void printLatestSensorData(const std::vector<std::unique_ptr<Sensor>>& sensors)
             std::cout << "Windspeed Sensor " << i + 1 << ": ";
         }
         std::cout << sensors[i]->getLatestData() << std::endl;
-    }    
-}
+    }
 
 #endif

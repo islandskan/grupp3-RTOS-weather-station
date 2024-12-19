@@ -9,76 +9,85 @@
 #include "WindSensor.h"
 
 bool Running = true;
-bool newDataAvailable = false;
 
 void printLatestSensorData(const std::vector<std::unique_ptr<Sensor>>& sensors);
-void printSensorData(const std::vector<std::unique_ptr<Sensor>>& sensors);
+void printStatistics(const std::vector<std::unique_ptr<Sensor>>& sensors);
 
 void startProgram()
 {
     std::vector<std::unique_ptr<Sensor>> sensors;
-    for (int i = 0; i < 5; i++) 
+    std::cout << "Runs you fool???" << std::endl;
+    int runs;
+    std::cin >> runs;
+    for (int i = 0; i < runs; i++) 
     {
         sensors.emplace_back(std::make_unique<TempSensor>());
     }
-    for (int i = 0; i < 5; i++) 
+    for (int i = 0; i < runs; i++) 
     {
         sensors.emplace_back(std::make_unique<HumiditySensor>());
     }
-    for (int i = 0; i < 5; i++) 
+    for (int i = 0; i < runs; i++) 
     {
         sensors.emplace_back(std::make_unique<WindSensor>());
     }
     std::this_thread::sleep_for(std::chrono::seconds(5));
-    printSensorData(sensors);
-    printLatestSensorData(sensors);
-    Running = false;
+    std::thread t_printAllSensorData([&sensors] {printStatistics(sensors);});
+    std::thread t_printLatestSensorData([&sensors] {printLatestSensorData(sensors);});
+    t_printAllSensorData.join();
+    t_printLatestSensorData.join();
 }
 
-void printSensorData(const std::vector<std::unique_ptr<Sensor>>& sensors)
+void printStatistics(const std::vector<std::unique_ptr<Sensor>>& sensors)
 {
-    std::cout << "Sensor Data: " << std::endl;
-    for (int i = 0; i < sensors.size(); i++)
+    while (Running)
     {
-        if (typeid(*sensors[i]) == typeid(TempSensor)) 
+        std::this_thread::sleep_for(std::chrono::seconds(10));
+        std::cout << "Sensor Statistical Data: " << std::endl;
+        for (int i = 0; i < sensors.size(); i++)
         {
-            std::cout << "Temperature Sensor " << i + 1 << ": ";
+            if (typeid(*sensors[i]) == typeid(TempSensor)) 
+            {
+                std::cout << "Temperature Sensor " << i + 1;
+            }
+            else if (typeid(*sensors[i]) == typeid(HumiditySensor)) 
+            {
+                std::cout << "Humidity Sensor " << i + 1;
+            }
+            else if (typeid(*sensors[i]) == typeid(WindSensor)) 
+            {
+                std::cout << "Windspeed Sensor " << i + 1;
+            }
+            std::cout << "\n- Average: " << sensors[i]->getAverageData() << "\n"
+                      << "- Minimum Data: " << sensors[i]->getMinimumData() << "\n"
+                      << "- Maximum Data: " << sensors[i]->getMaxData() << "\n";
         }
-        else if (typeid(*sensors[i]) == typeid(HumiditySensor)) 
-        {
-            std::cout << "Humidity Sensor " << i + 1 << ": ";
-        }
-        else if (typeid(*sensors[i]) == typeid(WindSensor)) 
-        {
-            std::cout << "Windspeed Sensor " << i + 1 << ": ";
-        }
-        for (const float& temperature : sensors[i]->getData())
-        {
-            std::cout << temperature << " ";
-        }
-        std::cout << std::endl;
     }
 }
 
 void printLatestSensorData(const std::vector<std::unique_ptr<Sensor>>& sensors)
 {
-    std::cout << "Latest temperature Data: " << std::endl;
-    for (int i = 0; i < sensors.size(); ++i) 
+    while (Running)
     {
-        if (typeid(*sensors[i]) == typeid(TempSensor))
+        std::this_thread::sleep_for(std::chrono::seconds(2));
+        std::cout << "Latest Sensor Data: " << std::endl;
+        for (int i = 0; i < sensors.size(); ++i) 
         {
-            std::cout << "Temperature Sensor " << i + 1 << ": ";
-        }
-        else if (typeid(*sensors[i]) == typeid(HumiditySensor))
-        {
-            std::cout << "Humidity Sensor " << i + 1 << ": ";
-        }
-        if (typeid(*sensors[i]) == typeid(WindSensor))
-        {
-            std::cout << "Windspeed Sensor " << i + 1 << ": ";
-        }
-        std::cout << sensors[i]->getLatestData() << std::endl;
-    }    
+            if (typeid(*sensors[i]) == typeid(TempSensor))
+            {
+                std::cout << "Temperature Sensor " << i + 1 << ": ";
+            }
+            else if (typeid(*sensors[i]) == typeid(HumiditySensor))
+            {
+                std::cout << "Humidity Sensor " << i + 1 << ": ";
+            }
+            if (typeid(*sensors[i]) == typeid(WindSensor))
+            {
+                std::cout << "Windspeed Sensor " << i + 1 << ": ";
+            }
+            std::cout << sensors[i]->getLatestData() << std::endl;
+        }    
+    }
 }
 
 #endif

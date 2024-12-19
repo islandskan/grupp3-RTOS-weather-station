@@ -28,10 +28,15 @@ public:
 
 protected:
     // Members
+    float max;
+    float min;
+    float average;
+
     std::vector<float> dataList;
     std::mt19937 mt;
 
     std::thread sensorThread;
+    std::thread calculationThread;
     std::atomic<bool> Running;
     std::mutex sensorMutex;
     float generateRandomSensorData(float minValue, float maxValue);
@@ -42,6 +47,7 @@ protected:
     float calculateAverage();
     float calculateMinimum();
     float calculateMaximum();
+    void calculateStatistics();
 };
 
 #endif

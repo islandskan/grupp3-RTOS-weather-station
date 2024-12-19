@@ -2,8 +2,8 @@
 
 Sensor::Sensor() : mt(std::random_device{}()), Running(true)
 {
-    this->sensorThread = std::thread(&Sensor::runSensor, this);
-    this->calculationThread = std::thread(&Sensor::calculateStatistics, this);
+    this->sensorThread = std::thread(runSensor, this);
+    this->calculationThread = std::thread(calculateStatistics, this);
 }
 
 Sensor::~Sensor()
@@ -21,16 +21,29 @@ std::vector<float> Sensor::getData()
 
 void Sensor::calculateStatistics()
 {
-    max = *std::max_element(dataList.begin(), dataList.end());
-    min = *std::min_element(dataList.begin(), dataList.end());
-    average = (std::accumulate(dataList.begin(), dataList.end(), 0.0) / dataList.size());
-    std::this_thread::sleep_for(std::chrono::seconds(5));
+
+    while (Running)
+    {
+        std::unique_lock<std::mutex> lock(sensorMutex);
+        if (!dataList.empty())
+        {
+            max = *std::max_element(dataList.begin(), dataList.end());
+            min = *std::min_element(dataList.begin(), dataList.end());
+            average = (std::accumulate(dataList.begin(), dataList.end(), 0.0) / dataList.size());
+        }
+        lock.unlock();
+        std::this_thread::sleep_for(std::chrono::seconds(5));
+    }
 }
 
 float Sensor::getLatestData()
 {
     std::lock_guard<std::mutex> lock(sensorMutex);
-    return dataList.back();
+    if (!dataList.empty())
+    {
+        return dataList.back();
+    }
+    return 0.0f; // or some other default value
 }
 
 float Sensor::getAverageData()
@@ -54,4 +67,6 @@ float Sensor::generateRandomSensorData(float minValue, float maxValue)
     return dist(mt);
 }
 
-void Sensor::runSensor() {}
+void Sensor::runSensor()
+{
+}

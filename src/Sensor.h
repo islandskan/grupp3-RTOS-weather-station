@@ -44,9 +44,6 @@ protected:
     virtual void runSensor();
 
     // Methods
-    float calculateAverage();
-    float calculateMinimum();
-    float calculateMaximum();
     void calculateStatistics();
 };
 

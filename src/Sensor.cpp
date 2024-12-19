@@ -13,35 +13,17 @@ Sensor::~Sensor()
     calculationThread.join();
 }
 
-float Sensor::calculateAverage()
-{
-    std::lock_guard<std::mutex> lock(sensorMutex);
-    return (std::accumulate(dataList.begin(), dataList.end(), 0.0) / dataList.size());
-}
-
 std::vector<float> Sensor::getData()
 {
     std::lock_guard<std::mutex> lock(sensorMutex);
     return dataList;
 }
 
-float Sensor::calculateMinimum()
-{
-    std::lock_guard<std::mutex> lock(sensorMutex);
-    return *std::min_element(dataList.begin(), dataList.end());
-}
-
-float Sensor::calculateMaximum()
-{
-    std::lock_guard<std::mutex> lock(sensorMutex);
-    return *std::max_element(dataList.begin(), dataList.end());
-}
-
 void Sensor::calculateStatistics()
 {
-    max = calculateMaximum();
-    min = calculateMinimum();
-    average = calculateAverage();
+    max = *std::max_element(dataList.begin(), dataList.end());
+    min = *std::min_element(dataList.begin(), dataList.end());
+    average = (std::accumulate(dataList.begin(), dataList.end(), 0.0) / dataList.size());
     std::this_thread::sleep_for(std::chrono::seconds(5));
 }
 
@@ -72,6 +54,4 @@ float Sensor::generateRandomSensorData(float minValue, float maxValue)
     return dist(mt);
 }
 
-void Sensor::runSensor()
-{
-}
+void Sensor::runSensor() {}

@@ -32,17 +32,6 @@ void startProgram()
 
     std::thread popWeatherData(populateWeatherData, std::ref(weatherdata), std::ref(TemperatureSensor1), std::ref(HumiditySensor1), std::ref(WindSensor1));
 
-    std::this_thread::sleep_for(std::chrono::seconds(2));
-    std::cout << "Printing average data of Temperature Sensor 1: " << TemperatureSensor1.getAverageData() << std::endl;
-    std::cout << "Printing maximum data of Temperature Sensor 1: " << TemperatureSensor1.getMaxData() << std::endl;
-    std::cout << "Printing minimum data of Temperature Sensor 1: " << TemperatureSensor1.getMinimumData() << std::endl;
-    std::this_thread::sleep_for(std::chrono::seconds(10));
-    std::cout << "Printing average data of Temperature Sensor 1: " << TemperatureSensor1.getAverageData() << std::endl;
-    std::cout << "Printing maximum data of Temperature Sensor 1: " << TemperatureSensor1.getMaxData() << std::endl;
-    std::cout << "Printing minimum data of Temperature Sensor 1: " << TemperatureSensor1.getMinimumData() << std::endl;
-
-    printWeatherData(weatherdata);
-    std::this_thread::sleep_for(std::chrono::seconds(20));
     printWeatherData(weatherdata);
 
     Running = false;

@@ -70,19 +70,6 @@ void printLatestSensorData(const std::vector<std::unique_ptr<Sensor>>& sensors, 
         std::cout << "Latest Sensor Data: " << std::endl;
         for (int i = 0; i < sensors.size(); ++i)
         {
-            // if (typeid(*sensors[i]) == typeid(TempSensor))
-            // {
-            //     std::cout << "Temperature Sensor " << i + 1 << ": ";
-            // }
-            // else if (typeid(*sensors[i]) == typeid(HumiditySensor))
-            // {
-            //     std::cout << "Humidity Sensor " << i + 1 << ": ";
-            // }
-            // if (typeid(*sensors[i]) == typeid(WindSensor))
-            // {
-            //     std::cout << "Windspeed Sensor " << i + 1 << ": ";
-            // }
-            // std::cout << sensors[i]->getLatestData() << std::endl;
             std::cout << sensors[i]->getSensorType() << ": " << sensors[i]->getLatestData() << "\n";
         }
     }

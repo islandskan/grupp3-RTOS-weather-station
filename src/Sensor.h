@@ -25,6 +25,8 @@ public:
     float getAverageData();
     float getMinimumData();
     float getMaxData();
+    virtual std::string getSensorType() const = 0;
+
 
 protected:
     // Members
@@ -41,7 +43,7 @@ protected:
     std::mutex sensorMutex;
     float generateRandomSensorData(float minValue, float maxValue);
 
-    virtual void runSensor();
+    virtual void runSensor() = 0;
 
     // Methods
     float calculateAverage();
